@@ -30,7 +30,7 @@ token, app_id = File.read('rubot-auth').lines
 bot = Discordrb::Bot.new token: token, application_id: app_id.to_i
 puts bot.invite_url
 
-bot.message(starting_with: 'rubot, link this:') do |event|
+bot.message(starting_with: 'octonyan, link this:') do |event|
   name = event.content.split(':')[1].strip
   $links[name] ||= []
   $links[name] << event.channel.id
@@ -38,24 +38,9 @@ bot.message(starting_with: 'rubot, link this:') do |event|
   event.respond "Linked repo #{name} to #{event.channel.mention} (`#{event.channel.id}`)"
 end
 
-bot.message(starting_with: 'rubot, reload handlers') do |event|
+bot.message(starting_with: 'octonyan, reload handlers') do |event|
   deploy!
   event.respond("Loaded #{$handlers.length} handlers")
-end
-
-bot.message(starting_with: 'rubot, eval:') do |event|
-  if event.user.id == 66237334693085184 # Replace this ID with yours if you want to do eval
-    _, *stuff = event.content.split(':')
-    event.respond(eval(stuff.join(':')))
-  else
-    event.respond('To quote the great Hlaaftana:
-  *You cannot use this command. Want to know why?
-  This command evaluates actual Groovy code, giving you
-  access to my entire computer file system and networking.
-  You could delete system32, download gigabytes of illegal porn
-  and delete all my files. If you think this is unfair, write your own bot, idiot.*
-Now this is not 100% correct, as the command evaluates Ruby code, not Groovy, and runs on Linux without a system32 folder, but you get the gist of it.')
-  end
 end
 
 bot.run :async
