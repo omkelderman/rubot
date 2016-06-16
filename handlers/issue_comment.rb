@@ -9,7 +9,7 @@ module RubotHandlers::IssueComment
       'a pull request'
     end
 
-    action = case payload['action']
+    action = case payload.action
     when 'created'
       'commented'
     when 'edited'

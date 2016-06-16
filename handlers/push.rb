@@ -14,7 +14,7 @@ module RubotHandlers::Push
       name = name.join('/')
       case type
       when 'heads' # branch
-        str = "pushed **#{payload['commits'].length}** commit#{payload['commits'].length == 1 ? '' : 's'} to branch **#{name}**\n"
+        str = "pushed **#{payload['commits'].length}** commit#{payload['commits'].length == 1 ? '' : 's'} to a branch **#{name}**\n"
         str += payload['commits'].map { |e| format_commit(e) }.join("\n")
         str
       end

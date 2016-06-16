@@ -1,6 +1,6 @@
 module RubotHandlers::PullRequestReviewComment
   def self.handle(payload)
-    action = case payload['action']
+    action = case payload.action
     when 'created'
       'commented'
     when 'edited'

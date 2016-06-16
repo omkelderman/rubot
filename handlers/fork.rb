@@ -2,6 +2,6 @@
 
 module RubotHandlers::Fork
   def self.handle(payload)
-    "forked this repo to **#{payload['forkee']['full_name']}**."
+    "forked this repository to **#{payload['forkee']['full_name']}**."
   end
 end

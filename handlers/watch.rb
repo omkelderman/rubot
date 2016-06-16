@@ -2,6 +2,6 @@
 
 module RubotHandlers::Watch
   def self.handle(payload)
-    'starred this repo!'
+    'starred this repository!'
   end
 end

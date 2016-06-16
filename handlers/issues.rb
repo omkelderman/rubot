@@ -11,22 +11,22 @@ module RubotHandlers::Issues
   def self.handle(payload)
     case payload.action
     when 'opened'
-      %(opened issue #{format_issue(payload['issue'])})
+      %(opened an issue #{format_issue(payload['issue'])})
     when 'reopened'
-      %(re-opened issue #{format_issue(payload['issue'])})
+      %(re-opened an issue #{format_issue(payload['issue'])})
     when 'closed'
-      %(closed issue #{format_issue(payload['issue'])})
+      %(closed an issue #{format_issue(payload['issue'])})
     when 'assigned'
-      %(assigned issue #{payload.tiny_issue} to **#{payload['assignee']['login']}**
+      %(assigned an issue #{payload.tiny_issue} to **#{payload['assignee']['login']}**
 <#{payload['issue']['html_url']}>)
     when 'unassigned'
-      %(unassigned issue #{payload.tiny_issue} from **#{payload['assignee']['login']}**
+      %(unassigned an issue #{payload.tiny_issue} from **#{payload['assignee']['login']}**
 <#{payload['issue']['html_url']}>)
     when 'labeled'
-      %(added label `[#{payload['label']['name']}]` to issue #{payload.tiny_issue}
+      %(added label `[#{payload['label']['name']}]` to an issue #{payload.tiny_issue}
 <#{payload['issue']['html_url']}>)
     when 'unlabeled'
-      %(removed label `[#{payload['label']['name']}]` from issue #{payload.tiny_issue}
+      %(removed label `[#{payload['label']['name']}]` from an issue #{payload.tiny_issue}
 <#{payload['issue']['html_url']}>)
     end
   end

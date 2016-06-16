@@ -2,6 +2,6 @@
 
 module RubotHandlers::Create
   def self.handle(payload)
-    "created #{payload['ref_type']} **#{payload['ref']}**"
+    "created a #{payload['ref_type']} `#{payload['ref']}`"
   end
 end
