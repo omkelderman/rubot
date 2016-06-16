@@ -31,11 +31,13 @@ bot = Discordrb::Bot.new token: token, application_id: app_id.to_i
 puts bot.invite_url
 
 bot.message(starting_with: 'octonyan, link this:') do |event|
-  name = event.content.split(':')[1].strip
-  $links[name] ||= []
-  $links[name] << event.channel.id
-  File.write('rubot-links', $links.to_json)
-  event.respond "Linked repo #{name} to #{event.channel.mention} (`#{event.channel.id}`)"
+  if event.user.username == 'ppy'
+    name = event.content.split(':')[1].strip
+    $links[name] ||= []
+    $links[name] << event.channel.id
+    File.write('rubot-links', $links.to_json)
+    event.respond "Linked repo #{name} to #{event.channel.mention} (`#{event.channel.id}`)"
+  end
 end
 
 bot.message(starting_with: 'octonyan, reload handlers') do |event|
