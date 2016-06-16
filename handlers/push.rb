@@ -9,13 +9,17 @@ module RubotHandlers::Push
   end
 
   def self.handle(payload)
-    _, type, *name = payload['ref'].split('/')
-    name = name.join('/')
-    case type
-    when 'heads' # branch
-      str = "pushed **#{payload['commits'].length}** commit#{payload['commits'].length == 1 ? '' : 's'} to branch **#{name}**\n"
-      str += payload['commits'].map { |e| format_commit(e) }.join("\n")
-      str
+    if payload['commits'].length > 0
+      _, type, *name = payload['ref'].split('/')
+      name = name.join('/')
+      case type
+      when 'heads' # branch
+        str = "pushed **#{payload['commits'].length}** commit#{payload['commits'].length == 1 ? '' : 's'} to branch **#{name}**\n"
+        str += payload['commits'].map { |e| format_commit(e) }.join("\n")
+        str
+      end
+    else
+      nil
     end
   end
 end
