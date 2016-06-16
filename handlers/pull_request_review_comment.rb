@@ -9,7 +9,7 @@ module RubotHandlers::PullRequestReviewComment
       'deleted a comment'
     end
 
-    %(#{action} on pull request #{payload.tiny_pull_request}
+    %(#{action} on a pull request #{payload.tiny_pull_request}
 <#{payload['comment']['html_url']}>
 ```
 #{payload['comment']['body']}
