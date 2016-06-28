@@ -20,8 +20,7 @@ module RubotHandlers::IssueComment
 
     %(#{action} on #{type} #{payload.tiny_issue}
 <#{payload['comment']['html_url']}>
-```
-#{payload['comment']['body']}
-```)
+
+#{payload['comment']['body']})
   end
 end

@@ -11,8 +11,7 @@ module RubotHandlers::PullRequestReviewComment
 
     %(#{action} on a pull request #{payload.tiny_pull_request}
 <#{payload['comment']['html_url']}>
-```
-#{payload['comment']['body']}
-```)
+
+#{payload['comment']['body']})
   end
 end

@@ -3,8 +3,7 @@ module RubotHandlers::CommitComment
     comment = payload['comment'];
     %(commented on a commit `#{comment['commit_id'][0..6]}`
 <#{comment['html_url']}>
-```
-#{comment['body']}
-```)
+
+#{comment['body']})
   end
 end
