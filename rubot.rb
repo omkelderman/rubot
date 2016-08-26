@@ -26,9 +26,12 @@ deploy!
 # Read the file of existing links so we don't have to re-add everything all the time
 $links = JSON.parse(File.read('rubot-links'))
 
-token, app_id = File.read('rubot-auth').lines
+token, app_id, secret = File.read('rubot-auth').lines
 bot = Discordrb::Bot.new token: token, application_id: app_id.to_i
 puts bot.invite_url
+
+# remove the newline character from the secret
+secret = secret.strip
 
 bot.message(starting_with: 'octonyan, link this:') do |event|
   if event.user.username == 'ppy'
@@ -103,8 +106,14 @@ end
 
 post '/webhook' do
   request.body.rewind
+
+  body = request.body.read
+
+  signature = 'sha1=' + OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha1'), secret, body)
+  return halt 500, "Signatures didn't match!" unless Rack::Utils.secure_compare(signature, request.env['HTTP_X_HUB_SIGNATURE'])
+
   event_type = request.env['HTTP_X_GITHUB_EVENT'] # The event type is a custom request header
-  payload = JSON.parse(request.body.read)
+  payload = JSON.parse(body)
   repo_name = payload['repository']['full_name']
 
   channels = $links[repo_name]
