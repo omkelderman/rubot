@@ -6,11 +6,18 @@ You need Ruby 2.3 and Bundler. First, install all the dependencies using `bundle
 ```json
 {}
 ```
-and "rubot-auth" that contains the bot's auth token and client ID on two lines:
+and "rubot-config" that contains the bot's auth token, client ID, GitHub webhook secret, Discord Server ID, Admin role name and the bot name on each line like this:
 ```
 TOKEN HERE
-171456123456123456
+BOT APP ID HERE
+GITHUB WEBHOOK SECRET HERE
+DISCORD SERVER ID IF WHICH TO CHECK ADMIN ROLE OF HERE
+NAME OF ADMIN ROLE HERE
+THE THE BOT WILL LISTEN TO HERE
 ```
+
+*Only people with the admin-role will be able to link repos*
+
 Then, use `ruby rubot.rb` to run it.
 
 ## How to use
