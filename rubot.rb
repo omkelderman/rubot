@@ -33,8 +33,8 @@ puts bot.invite_url
 # remove the newline character from the secret
 secret = secret.strip
 
-bot.message(starting_with: 'octonyan, link this:') do |event|
-  if event.user.username == 'ppy'
+bot.message(starting_with: 'tillerinobot, link this:') do |event|
+  if event.user.id == '123872865752711170' # userid of tillerino
     name = event.content.split(':')[1].strip
     $links[name] ||= []
     $links[name] << event.channel.id
@@ -43,7 +43,7 @@ bot.message(starting_with: 'octonyan, link this:') do |event|
   end
 end
 
-bot.message(starting_with: 'octonyan, reload handlers') do |event|
+bot.message(starting_with: 'tillerinobot, reload handlers') do |event|
   deploy!
   event.respond("Loaded #{$handlers.length} handlers")
 end
