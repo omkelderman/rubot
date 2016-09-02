@@ -26,15 +26,26 @@ deploy!
 # Read the file of existing links so we don't have to re-add everything all the time
 $links = JSON.parse(File.read('rubot-links'))
 
-token, app_id, secret = File.read('rubot-auth').lines
+token, app_id, secret, server_id, admin_role_name, bot_name = File.read('rubot-config').lines
 bot = Discordrb::Bot.new token: token, application_id: app_id.to_i
 puts bot.invite_url
 
-# remove the newline character from the secret
+# remove the newline character from the secret, admin_role_name and bot_name
 secret = secret.strip
+admin_role_name = admin_role_name.strip
+bot_name = bot_name.strip
 
-bot.message(starting_with: 'octonyan, link this:') do |event|
-  if event.user.username == 'ppy'
+admin_role = nil
+server = nil
+
+bot.ready do |event|
+  server = bot.servers[server_id.to_i]
+  admin_role = server.roles.find { |role| role.name == admin_role_name }
+end
+
+bot.message(starting_with: "#{bot_name}, link this:") do |event|
+  # if user has admin role?
+  if event.user.on(server).role?(admin_role)
     name = event.content.split(':')[1].strip
     $links[name] ||= []
     $links[name] << event.channel.id
@@ -43,7 +54,7 @@ bot.message(starting_with: 'octonyan, link this:') do |event|
   end
 end
 
-bot.message(starting_with: 'octonyan, reload handlers') do |event|
+bot.message(starting_with: "#{bot_name}, reload handlers") do |event|
   deploy!
   event.respond("Loaded #{$handlers.length} handlers")
 end
